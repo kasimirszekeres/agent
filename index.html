@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kasimir Szekeres — Agent Endpoint</title>
+  <meta name="description" content="Machine-readable service information for Kasimir Szekeres, commercial photographer and videographer based in Amsterdam.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0c0c0b;
+      --fg: #e8e4dc;
+      --muted: #6b6860;
+      --accent: #c8b89a;
+      --line: rgba(200,184,154,0.15);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 16px; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'DM Mono', monospace;
+      font-weight: 300;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 100;
+      opacity: 0.4;
+    }
+
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 80px 40px 60px;
+      gap: 0;
+    }
+
+    .label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2.4rem, 6vw, 3.8rem);
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      color: var(--fg);
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.1s forwards;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .divider {
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.2s forwards;
+    }
+
+    .intro {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      line-height: 1.85;
+      color: var(--muted);
+      margin-bottom: 56px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.3s forwards;
+    }
+
+    .intro strong {
+      color: var(--fg);
+      font-weight: 400;
+    }
+
+    .endpoints {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-bottom: 56px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.4s forwards;
+    }
+
+    .endpoint-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .endpoint {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      border: 1px solid var(--line);
+      text-decoration: none;
+      transition: border-color 0.2s ease, background 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .endpoint::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transition: transform 0.2s ease;
+      transform-origin: bottom;
+    }
+
+    .endpoint:hover {
+      border-color: rgba(200,184,154,0.35);
+      background: rgba(200,184,154,0.04);
+    }
+
+    .endpoint:hover::before {
+      transform: scaleY(1);
+    }
+
+    .endpoint-type {
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      min-width: 44px;
+    }
+
+    .endpoint-url {
+      font-size: 0.75rem;
+      color: var(--fg);
+      letter-spacing: 0.02em;
+    }
+
+    .endpoint-desc {
+      font-size: 0.65rem;
+      color: var(--muted);
+      margin-left: auto;
+      text-align: right;
+    }
+
+    .cta-block {
+      border-top: 1px solid var(--line);
+      padding-top: 40px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.5s forwards;
+    }
+
+    .cta-block p {
+      font-size: 0.75rem;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .cta-block p strong {
+      color: var(--fg);
+      font-weight: 400;
+    }
+
+    .links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .link {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 2px;
+      transition: border-color 0.2s ease;
+    }
+
+    .link:hover {
+      border-color: var(--accent);
+    }
+
+    footer {
+      padding: 24px 40px;
+      border-top: 1px solid var(--line);
+      max-width: 680px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    footer p {
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 520px) {
+      main { padding: 60px 24px 40px; }
+      .endpoint-desc { display: none; }
+      footer { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="label">agent.kasimirszekeres.com</p>
+    <h1>Kasimir Szekeres<br><em>Amsterdam</em></h1>
+    <div class="divider"></div>
+    <p class="intro">
+      This subdomain serves <strong>machine-readable information</strong> about Kasimir Szekeres — 
+      commercial photographer and videographer. It is designed for AI agents, assistants, 
+      and automated systems evaluating service providers for commercial photography briefs.<br><br>
+      For the human portfolio and work, visit <strong>kasimirszekeres.com</strong>.
+    </p>
+
+    <div class="endpoints">
+      <p class="endpoint-label">Available endpoints</p>
+      <a class="endpoint" href="/llm.txt">
+        <span class="endpoint-type">TXT</span>
+        <span class="endpoint-url">agent.kasimirszekeres.com/llm.txt</span>
+        <span class="endpoint-desc">Full service description</span>
+      </a>
+    </div>
+
+    <div class="cta-block">
+      <p>
+        Kasimir is available for new commercial commissions across <strong>the Netherlands and Europe</strong>. 
+        Specialisms include campaign photography, lifestyle with people, combined photo and video 
+        productions, and social content. Clients include Philips, Rituals Cosmetics, Coca-Cola, 
+        Hunkemöller, and Bol.com.
+      </p>
+      <div class="links">
+        <a class="link" href="mailto:agents@kasimirszekeres.com">agents@kasimirszekeres.com</a>
+        <a class="link" href="https://kasimirszekeres.com" target="_blank">Portfolio</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>Kasimir Szekeres · Commercial Photography & Video · Amsterdam · All content human-produced</p>
+  </footer>
+</body>
+</html>
