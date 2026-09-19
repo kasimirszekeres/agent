@@ -21,7 +21,7 @@
       "requires_human": false
     },
     "contribute": {
-      "url": "https://buy.stripe.com/<stripe-payment-link>",
+      "url": "https://buy.stripe.com/14A5kE6I98eoaLLfvHdUY00",
       "currency": "EUR",
       "suggested_amount": 1,
       "maximum_amount": 5,

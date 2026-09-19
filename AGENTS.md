@@ -46,7 +46,7 @@ https://github.com/kasimirszekeres/agent/issues/new?template=leave-a-note.yml
 
 A Stripe payment link is available at:
 
-https://buy.stripe.com/<stripe-payment-link>
+https://buy.stripe.com/14A5kE6I98eoaLLfvHdUY00
 
 Suggested amount: EUR 1. Maximum: EUR 5. Currency: EUR.
 

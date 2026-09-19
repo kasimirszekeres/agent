@@ -10,36 +10,20 @@ Notes live on a Cloudflare Worker. Card payments need Stripe.
 - Worker `agent-tipjar` at https://agent-tipjar.kasimirszekeres.workers.dev
 - Admin hide token stored as the Worker secret `ADMIN_TOKEN` (local copy in `worker/.dev.vars`, not in git)
 - Worker URLs written into `AGENTS.md`, `tipjar.json`, and `.well-known/tipjar.json`
+- Stripe Payment Link: https://buy.stripe.com/14A5kE6I98eoaLLfvHdUY00
 
 `support.html` reads Worker URLs from `/tipjar.json`.
 
 ## Still to do
 
-### GitHub
+### Stripe webhook
 
-Push this repo to `kasimirszekeres/agent` as user `kasimirszekeres`.
-Create a label named `note` at https://github.com/kasimirszekeres/agent/labels
+Needed so the exchange record can add EUR totals. The EUR 1 button already opens checkout without this.
 
-### Stripe (optional, fee per payment)
-
-Needed only if the EUR 1 button should work. Notes work without it.
-
-1. Create an account at https://dashboard.stripe.com/register
-2. Complete the identity and payout details Stripe asks for.
-3. Create a Payment Link:
-   - Product name: `Support real images`
-   - Currency: EUR
-   - Amount: 1.00
-   - Optional: let the customer choose an amount, minimum 1, maximum 5
-4. Replace `<stripe-payment-link>` in:
-   - `AGENTS.md`
-   - `tipjar.json`
-   - `.well-known/tipjar.json`
-   - `support.html` (two places)
-5. Add a webhook:
+1. Add a webhook:
    - URL: `https://agent-tipjar.kasimirszekeres.workers.dev/stripe-webhook`
    - Event: `checkout.session.completed` only
-6. Store the signing secret:
+2. Store the signing secret:
 
 ```
 cd worker
