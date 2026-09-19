@@ -1,0 +1,13 @@
+name = "agent-tipjar"
+main = "worker.js"
+compatibility_date = "2026-09-19"
+account_id = "5397d72a1b447d247fba545c79ecc95c"
+workers_dev = true
+
+[[kv_namespaces]]
+binding = "NOTES"
+id = "36854227363c459c84a8eac93fdcfb8d"
+
+[[kv_namespaces]]
+binding = "STATS"
+id = "de083f5f501342f8bbe830162eefb042"
